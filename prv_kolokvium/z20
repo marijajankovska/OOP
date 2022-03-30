@@ -1,0 +1,71 @@
+#include <stdio.h>
+struct Pacient
+{
+    char ime_pacient[100];
+    int osiguranje;
+    int broj_pregledi;
+};
+typedef struct Pacient pacient;
+struct MaticenDoktor
+{
+    char ime_doktor[100];
+    int broj_pacienti;
+    pacient pacienti[200];
+    float cena_pregled;
+};
+typedef struct MaticenDoktor maticen;
+void najuspesen_doktor (maticen md[], int n)
+{
+    float zarabotka, max_zarabotka = 0;
+    int indeks,pacienti,max_pac =0;
+    for(int i = 0; i < n; i++)
+    {
+        zarabotka = 0;
+        pacienti = 0;
+        for(int j = 0; j < md[i].broj_pacienti; j++)
+        {
+            if(md[i].pacienti[j].osiguranje == 0)
+            {
+                zarabotka += md[i].cena_pregled * md[i].pacienti[j].broj_pregledi;
+    
+            }
+           pacienti += md[i].pacienti[j].broj_pregledi;
+        }
+        if(zarabotka > max_zarabotka)
+        {
+            max_zarabotka = zarabotka;
+            max_pac = pacienti;
+            indeks = i;
+        }
+        else if(zarabotka == max_zarabotka )
+        {
+            if(pacienti > max_pac)
+            {
+                max_zarabotka = zarabotka;
+                indeks = i;
+                max_pac = pacienti;
+            }
+        }
+    }
+    printf("%s %.2f %d",md[indeks].ime_doktor, max_zarabotka, max_pac);
+}
+int main()
+{
+    int i,j,n;
+    maticen md[200];
+    scanf("%d", &n);
+    for(i = 0; i < n; i++)
+    {
+        scanf("%s", md[i].ime_doktor);
+        scanf("%d", &md[i].broj_pacienti);
+        scanf("%f", &md[i].cena_pregled);
+        for(j = 0; j < md[i].broj_pacienti; j++)
+        {
+            scanf("%s", md[i].pacienti[j].ime_pacient);
+            scanf("%d", &md[i].pacienti[j].osiguranje);
+            scanf("%d", &md[i].pacienti[j].broj_pregledi);
+        }
+    }
+    najuspesen_doktor(md,n);
+    return 0;
+}
