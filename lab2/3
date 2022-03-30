@@ -1,0 +1,70 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Film
+{
+    char ime_film[100];
+    char reziser [50];
+    char zanr [50];
+    int godina;
+public:
+    Film ()
+    {
+
+    }
+    Film (char imefilm[], char _reziser[], char _zanr[], int _godina)
+    {
+        strcpy(ime_film,imefilm);
+        strcpy (reziser,_reziser);
+        strcpy (zanr,_zanr);
+        godina = _godina;
+    }
+    void pecati ()
+    {
+        cout << "Ime: " << ime_film << endl;
+        cout << "Reziser: " << reziser <<endl;
+        cout << "Zanr: " << zanr << endl;
+        cout << "Godina: " << godina << endl;
+    }
+    int GetGodina ()
+    {
+        return godina;
+    }
+};
+
+void pecati_po_godina(Film f[], int n, int godina)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if(f[i].GetGodina() == godina)
+        {
+            f[i].pecati();
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    Film f[n];
+    char ime_film[100];
+    char reziser [50];
+    char zanr [50];
+    int godina;
+    for (int i = 0; i < n; i++)
+    {
+       cin >> ime_film;
+       cin >> reziser;
+       cin >> zanr;
+       cin >> godina;
+       Film ff(ime_film, reziser, zanr, godina);
+       f[i] = ff;
+    }
+    int Godina;
+    cin >> Godina;
+    pecati_po_godina(f,n,Godina);
+
+    return 0;
+}
