@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <string.h>
+#define NEDELI 4
+#define DENOVI 5
+typedef struct Rabotna_Nedela
+{
+    int rabotni_casovi[5];
+    int broj_na_nedelata;
+}rabotna_nedela;
+
+typedef struct Rabotnik
+{
+    char ime_na_rabotnik[50];
+    rabotna_nedela rn[4];
+}rabotnik;
+
+
+int max_nedela (rabotnik *r)
+{
+    int max_casovi = 0, max_nedela = 0,casovi_nedela = 0;
+   for (int i = 0; i < 4; i++)
+   {
+       casovi_nedela = 0;
+       for (int j = 0; j < 5; j++)
+       {
+           casovi_nedela += r->rn[i].rabotni_casovi[j];
+           if(casovi_nedela > max_casovi)
+           {
+               max_casovi = casovi_nedela;
+               max_nedela = i;
+           }
+       }
+
+   }
+       return max_nedela+1;
+}
+
+
+void table (rabotnik r[], int n)
+{
+    printf("Rab\t1\t2\t3\t4\tVkupno\n");
+    int Rabotni_casovi, vkupno = 0;
+    for(int k = 0; k < n; k++)
+    {
+        printf("%s\t", r[k].ime_na_rabotnik);vkupno = 0;
+        for (int j = 0; j < 4; j++)
+        {    Rabotni_casovi = 0;
+            for(int i = 0; i < 5; i++)
+            {
+                Rabotni_casovi += r[k].rn[j].rabotni_casovi[i];
+
+            }
+            vkupno += Rabotni_casovi;
+            printf("%d\t",Rabotni_casovi);
+        }
+        printf("%d\n",vkupno);
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    rabotnik rabotnici[n];
+    int i;
+    for (i = 0; i < n; ++i) {
+        scanf("%s", rabotnici[i].ime_na_rabotnik);
+        int j;
+        for (j = 0; j < NEDELI; ++j) {
+            int k;
+            for (k = 0; k < DENOVI; ++k) {
+                scanf("%d", &rabotnici[i].rn[j].rabotni_casovi[k]);
+            }
+
+        }
+    }
+    printf("TABLE\n");
+    table(rabotnici, n);
+    printf("MAX NEDELA NA RABOTNIK: %s\n", rabotnici[n / 2].ime_na_rabotnik);
+    printf("%d\n", max_nedela(&rabotnici[n / 2]));
+    return 0;
+}
