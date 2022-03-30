@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Laptop
+{
+    char marka[100];
+    float golemina;
+    int touch;
+    int cena;
+};
+typedef struct Laptop laptop;
+struct ITStore
+{
+    char prodavnica[100];
+    char lokacija[100];
+    laptop dostapnost[100];
+    int broj_dostapni_laptopi;
+};
+typedef struct ITStore it;
+void print (it p)
+{
+    printf("%s %s\n", p.prodavnica,p.lokacija );
+    for(int i = 0; i < p.broj_dostapni_laptopi; i++)
+    {
+        printf ("%s %g %d \n", p.dostapnost[i].marka, p.dostapnost[i].golemina, p.dostapnost[i].cena);
+    }
+}
+void najeftina_ponuda(it ponuda[], int n)
+{
+    int min_cena = 2147483647,index;
+    for (int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < ponuda[i].broj_dostapni_laptopi; j++)
+        {
+            if(min_cena > ponuda[i].dostapnost[j].cena)
+            {
+                if(ponuda[i].dostapnost[j].touch == 1){
+                    min_cena = ponuda[i].dostapnost[j].cena;
+                    index = i;
+                }
+            }
+        }
+    }
+    printf("Najeftina ponuda ima prodavnicata: \n%s %s\n", ponuda[index].prodavnica, ponuda[index].lokacija);
+    printf("Najniskata cena iznesuva: %d", min_cena);
+}
+int main() {
+    it s[100];
+    int n;
+    scanf("%d",&n); //broj na IT prodavnici
+
+    //vnesuvanje na prodavnicite edna po edna, zaedno so raspolozlivite laptopvi vo niv
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%s\n %s\n", &s[i].prodavnica, &s[i].lokacija);
+        scanf("%d\n",&s[i].broj_dostapni_laptopi);
+        for(int j = 0 ; j < s[i].broj_dostapni_laptopi; j++)
+        {
+            scanf("%s %f %d %d", &s[i].dostapnost[j].marka, &s[i].dostapnost[j].golemina,&s[i].dostapnost[j].touch, &s[i].dostapnost[j].cena);
+        }
+
+    }
+    //pecatenje na site prodavnici
+    for(int i = 0; i < n; i++)
+    {
+        print(s[i]);
+    }
+    //povik na glavnata metoda
+    najeftina_ponuda(s,n);
+    return 0;
+}
