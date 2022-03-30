@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+struct Igrac
+{
+    char username[15];
+    int level;
+    int points;
+};
+struct Igra
+{
+    char ime_igra[20];
+    Igrac lista_igraci [30];
+    int igraci;
+};
+void najdobarIgrac (Igra igri[], int n)
+{
+    int Najmnogu_igraci = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(igri[i].igraci > igri[Najmnogu_igraci].igraci)
+            Najmnogu_igraci = i;
+    }
+    Igra najpopularna_igra = igri[Najmnogu_igraci];
+    int najdobar_igrac = 0;
+    for(int i = 0; i < najpopularna_igra.igraci; i++)
+    {
+        if(najpopularna_igra.lista_igraci[i].points > najpopularna_igra.lista_igraci[najdobar_igrac].points)
+        {
+            najdobar_igrac = i;
+        }
+        else if(najpopularna_igra.lista_igraci[i].points > najpopularna_igra.lista_igraci[najdobar_igrac].points)
+        {
+            if(najpopularna_igra.lista_igraci[i].level > najpopularna_igra.lista_igraci[i].level)
+            {
+                najdobar_igrac = i;
+            }
+        }
+    }
+    cout<<"Najdobar igrac e igracot so korisnicko ime ";
+    cout<<najpopularna_igra.lista_igraci[najdobar_igrac].username;
+    cout<<" koj ja igra igrata ";
+    cout<<najpopularna_igra.ime_igra;
+}
+   int main()
+   {
+       int n,m;
+       char ime[20];
+       cin >> n;
+       Igra pole_igri[100];
+       for(int i = 0; i < n; i++)
+       {
+           Igra nov;
+           cin >> nov.ime_igra >> nov.igraci;
+           Igrac pole[30];
+           for(int j = 0; j < nov.igraci; j++)
+           {
+                Igrac nova;
+                cin >> nova.username >> nova.level >> nova.points;
+                nov.lista_igraci[j] = nova;
+           }
+           pole_igri[i] =nov;
+
+       }
+       najdobarIgrac(pole_igri,n);
+       return 0;
+   }
