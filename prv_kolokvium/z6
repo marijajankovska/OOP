@@ -1,0 +1,67 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+struct Voz
+{
+    char relacija[50];
+    float km;
+    int broj_patnici;
+};
+struct ZeleznickaStanica
+{
+    char lokacija[20];
+    Voz vozovi[30];
+    int broj_vozovi;
+};
+void NajratkaRelacija (ZeleznickaStanica zs[], int n, char grad[])
+{
+    float najkratko;
+    for(int i = 0; i < n; i++)
+    {
+         if(strcmp(zs[i].lokacija,grad) == 0)
+        {
+            najkratko = zs[i].vozovi[0].km;
+        }
+    }
+
+    char relacija[50];
+    for(int i = 0; i < n; i++)
+    {
+        if(strcmp(zs[i].lokacija,grad) == 0)
+        {
+            for(int j = 0; j < zs[i].broj_vozovi; j++)
+            {
+                if(najkratko >= zs[i].vozovi[j].km)
+                {
+                    najkratko = zs[i].vozovi[j].km;
+                    strcpy(relacija,zs[i].vozovi[j].relacija);
+                }
+            }
+
+        }
+    }
+    cout << "Najkratka relacija: "<< relacija << " " << "(" << najkratko << " km)";
+}
+int main()
+{
+    int n, BrojVozovi;
+    cin >> n;
+    ZeleznickaStanica zStanica[100];
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> zStanica[i].lokacija;
+        cin >> zStanica[i].broj_vozovi;
+        for(int j = 0; j < zStanica[i].broj_vozovi; j++)
+        {
+            cin >> zStanica[i].vozovi[j].relacija;
+            cin >> zStanica[i].vozovi[j].km;
+            cin>>zStanica[i].vozovi[j].broj_patnici;
+        }
+    }
+    char grad[25];
+    cin >> grad;
+    NajratkaRelacija(zStanica,n,grad);
+    return 0;
+
+}
