@@ -1,0 +1,63 @@
+#include <stdio.h>
+struct SkiLift
+{
+    char ime_skilift[15];
+    int max_korisnici;
+    int funkcija;
+};
+typedef struct SkiLift skilift;
+struct SkiCentar
+{
+    char ime_skicentar[15];
+    char lokacija[20];
+    skilift liftovi[20];
+    int broj_skiliftovi;
+};
+typedef struct SkiCentar skicentar;
+void najgolemKapacitet (skicentar *sc, int n)
+{
+    int max_kapacitet = 0, indeks, temp, max_lift = 0,kapacitet;
+    for(int i = 0; i < n; i++)
+    {
+        kapacitet = 0;
+        for(int k = 0; k < sc[i].broj_skiliftovi; k++)
+        {
+        if(sc[i].liftovi[k].funkcija == 1)
+        {
+            kapacitet += sc[i].liftovi[k].max_korisnici;
+        }
+        }
+        temp = kapacitet;
+        if((temp > max_kapacitet))
+        {
+            max_kapacitet = temp;
+            indeks = i;
+        }
+        else if(temp == max_kapacitet && sc[i].broj_skiliftovi > sc[indeks].broj_skiliftovi)
+        {
+            max_kapacitet = temp;
+            indeks = i;
+        }
+    }
+    printf("%s\n%s\n%d\n", sc[indeks].ime_skicentar, sc[indeks].lokacija, max_kapacitet);
+}
+int main()
+{
+    int i,j,n;
+    skicentar sc[20];
+    scanf("%d", &n);
+    for(i = 0; i < n; i++)
+    {
+        scanf("%s", sc[i].ime_skicentar);
+        scanf("%s", sc[i].lokacija);
+        scanf("%d", &sc[i].broj_skiliftovi);
+        for(j = 0; j < sc[i].broj_skiliftovi; j++)
+        {
+            scanf("%s", sc[i].liftovi[j].ime_skilift);
+            scanf("%d", &sc[i].liftovi[j].max_korisnici);
+            scanf("%d", &sc[i].liftovi[j].funkcija);
+        }
+    }
+    najgolemKapacitet(sc,n);
+    return 0;
+}
