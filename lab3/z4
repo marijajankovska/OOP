@@ -1,0 +1,87 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Masa
+{
+public:
+    int dolzina;
+    int sirina;
+public:
+    Masa()
+    {
+        dolzina = 0;
+        sirina = 0;
+    }
+    Masa(int d , int s )
+    {
+        dolzina = d;
+        sirina = s;
+    }
+    void print()
+    {
+        cout << "Masa: "<< dolzina << " " << sirina << endl;
+    }
+};
+class Soba
+{
+private:
+    Masa masa;
+    int dolzinaSoba;
+    int sirinaSoba;
+public:
+    Soba()
+    {}
+    Soba (Masa m, int d , int s )
+    {
+        masa = m;
+        dolzinaSoba = d;
+        sirinaSoba = s;
+    }
+    void print()
+    {
+        cout << " Soba: " << dolzinaSoba << " " << sirinaSoba << " ";
+        masa.print();
+
+    }
+};
+class Kukja
+{
+private:
+    Soba soba;
+    char adresa[50];
+public:
+    Kukja(){ }
+    Kukja (Soba s, char a[])
+    {
+        soba = s;
+        strcpy(adresa,a);
+    }
+    void print()
+    {
+        cout << "Adresa: " << adresa;
+        soba.print();
+    }
+};
+int main()
+{
+    int n;
+    cin >> n;
+    for(int i = 0; i < n; i++)
+    {
+        int masaSirina, masaDolzina;
+        cin >> masaSirina;
+        cin >> masaDolzina;
+        Masa m(masaSirina, masaDolzina);
+        int sobaSirina, sobaDolzina;
+        cin >> sobaSirina;
+        cin >> sobaDolzina;
+        Soba s(m, sobaSirina, sobaDolzina);
+        char adresa[30];
+        cin >> adresa;
+        Kukja k(s,adresa);
+        k.print();
+
+    }
+    return 0;
+
+}
